@@ -4,9 +4,9 @@ const fs = require('fs');
 let server = http.createServer( async(req, res) => {
     if(req.url == '/') {
         try {
-            let pageData = await readFile('./homePage.html');
+            let html = await readFile('./homePage.html');
             res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(pageData);
+            res.write(html);
             return res.end();
         } catch (err) {
             console.log(err);
@@ -24,12 +24,12 @@ let server = http.createServer( async(req, res) => {
 
 function readFile(path) {
     return new Promise((resolve, reject) => {
-        fs.readFile(path, (err, data) => {
+        fs.readFile(path, (err, fileContent) => {
             if(err) {
                 reject(err);
             }
             else {
-                resolve(data);
+                resolve(fileContent);
             }
         });
     });
